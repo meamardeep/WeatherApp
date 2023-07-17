@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
@@ -7,7 +7,15 @@ function App() {
 
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(null);
-  
+
+  let ctime = new Date().toLocaleTimeString();
+  const [date, setDateTime] = useState(ctime);
+  setInterval(() => {
+    setDateTime(new Date().toLocaleTimeString())
+  }, 10000);
+clearInterval();
+
+
     const fetchWeather = async () => {
       try{
         setWeatherData("");
@@ -61,7 +69,9 @@ function App() {
 
   
   return (
-    <div className="App">
+    <>
+      <div className="App">
+      <div></div>
       <div className='d-flex flex-column'>
       <h1>Weather App!</h1>
 
@@ -78,16 +88,30 @@ function App() {
           <div className='card-body'>
           <h2>{weatherData.current.temp_c}c</h2>
           <h5>{weatherData.location.name}, {weatherData.location.region}, {weatherData.location.country}</h5>
+          <h5 style={{color:'blue',}} >{date}</h5>
+
           <h6 style={{marginBottom:'20px'}}><img alt='' style={{width : '4rem'}} src='/Humidity.png'/><h5>{weatherData.current.humidity} Humidity</h5></h6>
           <h5 className=''>Wind speed : {weatherData.current.wind_mph} mph</h5>
-
           </div>
         </div>
       )}
+
+      </div>  
+      <div></div>  
+    </div>  
+
+
+    <div style={{position: 'fixed', bottom : 0, width:'100%'}}>
+      <hr></hr>
+      <div className='d-flex justify-content-around'>
+      <div></div>
+      <p style={{display:'flex', justifyContent:'center'}}>Developed by Amardeep K</p>
+      <h5 style={{color: 'blue'}}>{date}</h5>
       </div>
       
-      
     </div>
+    </>
+    
   );
 }
 
